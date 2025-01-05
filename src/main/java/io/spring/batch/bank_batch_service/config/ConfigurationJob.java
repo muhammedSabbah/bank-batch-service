@@ -1,5 +1,6 @@
 package io.spring.batch.bank_batch_service.config;
 
+import io.spring.batch.bank_batch_service.listener.JobLoggerListener;
 import io.spring.batch.bank_batch_service.validator.ParamValidator;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -51,6 +52,7 @@ public class ConfigurationJob {
                 .start(step1())
                 .validator(validator())
                 .incrementer(new DailyJobTimeStamper())
+                .listener(new JobLoggerListener())
                 .build();
     }
 
