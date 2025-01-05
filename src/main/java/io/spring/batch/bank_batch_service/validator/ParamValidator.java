@@ -1,4 +1,4 @@
-package io.spring.batch.bank_batch_service.valid;
+package io.spring.batch.bank_batch_service.validator;
 
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersInvalidException;

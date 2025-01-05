@@ -1,6 +1,6 @@
 package io.spring.batch.bank_batch_service.config;
 
-import io.spring.batch.bank_batch_service.valid.ParamValidator;
+import io.spring.batch.bank_batch_service.validator.ParamValidator;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.StepContribution;
@@ -17,8 +17,7 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.Arrays;
 
-import static io.spring.batch.bank_batch_service.constant.Const.FILE_NAME;
-import static io.spring.batch.bank_batch_service.constant.Const.NAME;
+import static io.spring.batch.bank_batch_service.constant.Const.*;
 
 @Configuration
 @EnableBatchProcessing
@@ -36,7 +35,7 @@ public class ConfigurationJob {
 
         DefaultJobParametersValidator defaultJobParametersValidator = new DefaultJobParametersValidator(
                 new String[] { FILE_NAME },
-                new String[] { NAME }
+                new String[] { NAME, CURRENT_DATE}
         );
         defaultJobParametersValidator.afterPropertiesSet();
 
@@ -51,6 +50,7 @@ public class ConfigurationJob {
         return this.jobBuilderFactory.get("basicJob")
                 .start(step1())
                 .validator(validator())
+                .incrementer(new DailyJobTimeStamper())
                 .build();
     }
 
